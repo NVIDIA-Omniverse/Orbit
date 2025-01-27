@@ -235,6 +235,61 @@ Clone the Isaac Lab repository into your workspace:
                -d, --docs           Build the documentation from source using sphinx.
                -c, --conda [NAME]   Create the conda environment for Isaac Lab. Default name is 'isaaclab'.
 
+Setting up the conda environment (optional)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. attention::
+   This step is optional. If you are using the bundled python with Isaac Sim, you can skip this step.
+
+.. note::
+
+   If you use Conda, we recommend using `Miniconda <https://docs.anaconda.com/miniconda/miniconda-other-installer-links/>`_.
+
+The executable ``isaaclab.sh`` automatically fetches the python bundled with Isaac
+Sim, using ``./isaaclab.sh -p`` command (unless inside a virtual environment). This executable
+behaves like a python executable, and can be used to run any python script or
+module with the simulator. For more information, please refer to the
+`documentation <https://docs.omniverse.nvidia.com/isaacsim/latest/manual_standalone_python.html#isaac-sim-python-environment>`__.
+
+To install ``conda``, please follow the instructions `here <https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html>`__.
+You can create the Isaac Lab environment using the following commands.
+
+.. tab-set::
+   :sync-group: os
+
+   .. tab-item:: :icon:`fa-brands fa-linux` Linux
+      :sync: linux
+
+      .. code:: bash
+
+         # Option 1: Default name for conda environment is 'isaaclab'
+         ./isaaclab.sh --conda  # or "./isaaclab.sh -c"
+         # Option 2: Custom name for conda environment
+         ./isaaclab.sh --conda my_env  # or "./isaaclab.sh -c my_env"
+
+   .. tab-item:: :icon:`fa-brands fa-windows` Windows
+      :sync: windows
+
+      .. code:: batch
+
+         :: Option 1: Default name for conda environment is 'isaaclab'
+         isaaclab.bat --conda  :: or "isaaclab.bat -c"
+         :: Option 2: Custom name for conda environment
+         isaaclab.bat --conda my_env  :: or "isaaclab.bat -c my_env"
+
+
+Once created, be sure to activate the environment before proceeding!
+
+.. code:: bash
+
+   conda activate isaaclab  # or "conda activate my_env"
+
+Once you are in the virtual environment, you do not need to use ``./isaaclab.sh -p`` / ``isaaclab.bat -p``
+to run python scripts. You can use the default python executable in your environment
+by running ``python`` or ``python3``. However, for the rest of the documentation,
+we will assume that you are using ``./isaaclab.sh -p`` / ``isaaclab.bat -p`` to run python scripts. This command
+is equivalent to running ``python`` or ``python3`` in your virtual environment.
+
 Installation
 ~~~~~~~~~~~~
 
@@ -335,3 +390,52 @@ On Windows machines, please terminate the process from Command Prompt using
 
 
 If you see this, then the installation was successful! |:tada:|
+
+Train a robot!
+~~~~~~~~~~~~~~~
+
+You can now use Isaac Lab to train a robot through Reinforcement Learning! The quickest way to use Isaac Lab is through the predefined workflows using one of our **Batteries-included** robot tasks. Execute the following command to quickly train a robotic
+hand to orient a cube!
+
+.. tab-set::
+   :sync-group: os
+
+   .. tab-item:: :icon:`fa-brands fa-linux` Linux
+      :sync: linux
+
+      .. code:: bash
+
+         ./isaaclab.sh -p source/standalone/workflows/rsl_rl/train.py --task=Isaac-Repose-Cube-Shadow-Vision-Direct-v0 --enable_cameras
+
+   .. tab-item:: :icon:`fa-brands fa-windows` Windows
+      :sync: windows
+
+      .. code:: batch
+
+         isaaclab.bat -p source/standalone/workflows/rsl_rl/train.py --task=Isaac-Repose-Cube-Shadow-Vision-Direct-v0 --enable_cameras
+
+... Or teach a dog how to go for a walk!
+
+.. tab-set::
+   :sync-group: os
+
+   .. tab-item:: :icon:`fa-brands fa-linux` Linux
+      :sync: linux
+
+      .. code:: bash
+
+         ./isaaclab.sh -p source/standalone/workflows/rsl_rl/train.py --task=Isaac-Velocity-Rough-Anymal-C-v0
+
+   .. tab-item:: :icon:`fa-brands fa-windows` Windows
+      :sync: windows
+
+      .. code:: batch
+
+         isaaclab.bat -p source/standalone/workflows/rsl_rl/train.py --task=Isaac-Velocity-Rough-Anymal-C-v0
+
+Isaac Lab provides the tools you'll need to create your own **Tasks** and **Workflows** for whatever your project needs may be. Take a look at our :ref:`how-to` guides like `Adding your own learning Library <source/how-to/add_own_library>`_ or `Wrapping Environments <source/how-to/wrap_rl_env>`_ for details.
+
+.. figure:: ../../_static/setup/shadow_hands_example.jpg
+    :align: center
+    :figwidth: 100%
+    :alt: Idle hands...

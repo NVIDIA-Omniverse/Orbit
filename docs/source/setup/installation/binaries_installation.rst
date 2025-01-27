@@ -276,10 +276,8 @@ behaves like a python executable, and can be used to run any python script or
 module with the simulator. For more information, please refer to the
 `documentation <https://docs.omniverse.nvidia.com/isaacsim/latest/manual_standalone_python.html#isaac-sim-python-environment>`__.
 
-Although using a virtual environment is optional, we recommend using ``conda``. To install
-``conda``, please follow the instructions `here <https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html>`__.
-In case you want to use ``conda`` to create a virtual environment, you can
-use the following command:
+To install ``conda``, please follow the instructions `here <https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html>`__.
+You can create the Isaac Lab environment using the following commands.
 
 .. tab-set::
    :sync-group: os
@@ -305,8 +303,7 @@ use the following command:
          isaaclab.bat --conda my_env  :: or "isaaclab.bat -c my_env"
 
 
-If you are using ``conda`` to create a virtual environment, make sure to
-activate the environment before running any scripts. For example:
+Once created, be sure to activate the environment before proceeding!
 
 .. code:: bash
 
@@ -419,3 +416,52 @@ On Windows machines, please terminate the process from Command Prompt using
 
 
 If you see this, then the installation was successful! |:tada:|
+
+Train a robot!
+~~~~~~~~~~~~~~~
+
+You can now use Isaac Lab to train a robot through Reinforcement Learning! The quickest way to use Isaac Lab is through the predefined workflows using one of our **Batteries-included** robot tasks. Execute the following command to quickly train a robotic
+hand to orient a cube!
+
+.. tab-set::
+   :sync-group: os
+
+   .. tab-item:: :icon:`fa-brands fa-linux` Linux
+      :sync: linux
+
+      .. code:: bash
+
+         ./isaaclab.sh -p source/standalone/workflows/rsl_rl/train.py --task=Isaac-Repose-Cube-Shadow-Vision-Direct-v0 --enable_cameras
+
+   .. tab-item:: :icon:`fa-brands fa-windows` Windows
+      :sync: windows
+
+      .. code:: batch
+
+         isaaclab.bat -p source/standalone/workflows/rsl_rl/train.py --task=Isaac-Repose-Cube-Shadow-Vision-Direct-v0 --enable_cameras
+
+... Or teach a dog how to go for a walk!
+
+.. tab-set::
+   :sync-group: os
+
+   .. tab-item:: :icon:`fa-brands fa-linux` Linux
+      :sync: linux
+
+      .. code:: bash
+
+         ./isaaclab.sh -p source/standalone/workflows/rsl_rl/train.py --task=Isaac-Velocity-Rough-Anymal-C-v0
+
+   .. tab-item:: :icon:`fa-brands fa-windows` Windows
+      :sync: windows
+
+      .. code:: batch
+
+         isaaclab.bat -p source/standalone/workflows/rsl_rl/train.py --task=Isaac-Velocity-Rough-Anymal-C-v0
+
+Isaac Lab provides the tools you'll need to create your own **Tasks** and **Workflows** for whatever your project needs may be. Take a look at our :ref:`how-to` guides like `Adding your own learning Library <source/how-to/add_own_library>`_ or `Wrapping Environments <source/how-to/wrap_rl_env>`_ for details.
+
+.. figure:: ../../_static/setup/shadow_hands_example.jpg
+    :align: center
+    :figwidth: 100%
+    :alt: Idle hands...

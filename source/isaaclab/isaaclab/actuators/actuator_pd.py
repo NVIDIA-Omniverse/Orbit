@@ -51,6 +51,42 @@ class ImplicitActuator(ActuatorBase):
     cfg: ImplicitActuatorCfg
     """The configuration for the actuator model."""
 
+    def __init__(self, cfg: ImplicitActuatorCfg, *args, **kwargs):
+        # effort limits
+        if cfg.effort_limit_sim is None and cfg.effort_limit is not None:
+            # TODO: Eventually we want to throw a warning here to only use 'effort_limit_sim'.
+            #   We should do this once all parameters have an "_sim" suffix.
+            cfg.effort_limit_sim = cfg.effort_limit
+        elif cfg.effort_limit_sim is not None and cfg.effort_limit is None:
+            # TODO: Eventually we want to get rid of 'effort_limit' for implicit actuators.
+            #   We should do this once all parameters have an "_sim" suffix.
+            cfg.effort_limit = cfg.effort_limit_sim
+        elif cfg.effort_limit_sim is not None and cfg.effort_limit is not None:
+            raise ValueError(
+                "The <ImplicitActuatorCfg> object has set both 'effort_limit_sim' and 'effort_limit'."
+                " Please only set one of 'effort_limit' or 'effort_limit_sim' for implicit actuators."
+            )
+
+        # velocity limits
+        if cfg.velocity_limit_sim is None and cfg.velocity_limit is not None:
+            # TODO: Eventually we want to throw a warning here to only use 'velocity_limit_sim'.
+            #   We should do this once all parameters have an "_sim" suffix.
+            cfg.velocity_limit_sim = cfg.velocity_limit
+        elif cfg.velocity_limit_sim is not None and cfg.velocity_limit is None:
+            # TODO: Eventually we want to get rid of 'velocity_limit' for implicit actuators.
+            #   We should do this once all parameters have an "_sim" suffix.
+            cfg.velocity_limit = cfg.velocity_limit_sim
+        elif cfg.velocity_limit_sim is not None and cfg.velocity_limit is not None:
+            raise ValueError(
+                "The <ImplicitActuatorCfg> object has set both 'velocity_limit_sim' and 'velocity_limit'."
+                " Please only set one of 'velocity_limit' or 'velocity_limit_sim' for implicit actuators."
+            )
+
+        # set implicit actuator model flag
+        ImplicitActuator.is_implicit_model = True
+        # call the base class
+        super().__init__(cfg, *args, **kwargs)
+
     """
     Operations.
     """
@@ -296,7 +332,7 @@ class DelayedPDActuator(IdealPDActuator):
 class RemotizedPDActuator(DelayedPDActuator):
     """Ideal PD actuator with angle-dependent torque limits.
 
-    This class extends the :class:`DelayedPDActuator` class by adding angle-dependent torque limits to the actuator.
+    This class extends the :class:`DelayedPDActuator` class by adding angle-dependent torque limits to the self.
     The torque limits are applied by querying a lookup table describing the relationship between the joint angle
     and the maximum output torque. The lookup table is provided in the configuration instance passed to the class.
 

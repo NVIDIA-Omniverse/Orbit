@@ -76,7 +76,6 @@ class ImplicitActuator(ActuatorBase):
             #   We should do this once all parameters have an "_sim" suffix.
             cfg.velocity_limit = cfg.velocity_limit_sim
         elif cfg.velocity_limit_sim is not None and cfg.velocity_limit is not None:
-            print("velocity double set")
             raise ValueError(
                 "The <ImplicitActuatorCfg> object has set both 'velocity_limit_sim' and 'velocity_limit'."
                 " Please only set one of 'velocity_limit' or 'velocity_limit_sim' for implicit actuators."

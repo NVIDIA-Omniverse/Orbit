@@ -66,7 +66,6 @@ class ImplicitActuator(ActuatorBase):
                 "The <ImplicitActuatorCfg> object has set both 'effort_limit_sim' and 'effort_limit'."
                 " Please only set one of 'effort_limit' or 'effort_limit_sim' for implicit actuators."
             )
-
         # velocity limits
         if cfg.velocity_limit_sim is None and cfg.velocity_limit is not None:
             # TODO: Eventually we want to throw a warning here to only use 'velocity_limit_sim'.
